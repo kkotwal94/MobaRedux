@@ -1,8 +1,8 @@
 {
-  "name": "react-webpack-node",
-  "version": "1.7.16",
-  "description": "A simple Node.js app using Express 4 with Webpack, React, alt, ImmutableJS",
-  "repository": "https://github.com/choonkending/react-webpack-node",
+  "name": "Mobaredux",
+  "version": "0.0.0",
+  "description": "Moba memeified",
+  "repository": "https://github.com/kkotwal94/MobaRedux",
   "main": "index.js",
   "scripts": {
     "babel": "babel --presets es2015,stage-0 --ignore node_modules,public",
@@ -20,7 +20,7 @@
     "test:watch": "cross-env NODE_ENV=test npm test -- --watch --no-single-run",
     "postinstall": "npm run build"
   },
-  "author": "Choon Ken Ding",
+  "author": "Karan Kotwal",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^3.0.1",
