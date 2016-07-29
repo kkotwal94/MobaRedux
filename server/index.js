@@ -31,6 +31,8 @@ if (ENV === 'development') {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
+global.navigator = global.navigator || {};
+global.navigator.userAgent = global.navigator.userAgent || 'all';
 /*
  * Bootstrap application settings
  */
