@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from 'css/components/about';
 
+import {Tabs, Tab} from 'material-ui/Tabs';
+
 const cx = classNames.bind(styles);
 
 /*
@@ -25,6 +27,10 @@ const About = () => {
         &nbsp;could be improved, please create an issue&nbsp;
           <a target="_blank" href="https://github.com/kkotwal94/MobaRedux/issues">here</a>!
         </p>
+        <Tabs>
+          <Tab/>
+          <Tab/>
+          </Tabs>
       </div>
     </div>
   );

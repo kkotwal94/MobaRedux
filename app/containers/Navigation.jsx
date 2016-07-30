@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logOut } from 'actions/users';
 import { withRouter } from 'react-router';
-import classNames from 'classnames/bind';
 //Material Ui stuff
 import {
       IconButton,
@@ -12,13 +11,12 @@ import {
       RaisedButton,
       FlatButton,
       Paper} from 'material-ui';
-import AppCanvas from 'material-ui/internal/AppCanvas';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
 import FontIcon from 'material-ui/FontIcon';
 import {List, ListItem, MakeSelectable  } from 'material-ui/List'
 import {Tabs, Tab} from 'material-ui/Tabs';
-
+import EnhancedButton from 'material-ui/internal/EnhancedButton'
 import Spacing from 'material-ui/styles/spacing';
 import {white} from 'material-ui/styles/colors';
 
@@ -101,11 +99,22 @@ class Navigation extends Component {
   }
 
 
+
+
+
   //for when we change tabs on our navbar
   _handleTabChange = (value, e, tab) => {
     //console.log(this.context.history);
-    if(tab.props.route != '/login') {
-      this.props.router.pushState(null, tab.props.route);
+    let route;
+    if(value == 8) {
+      route = '/dashboard';
+    } 
+
+    if(value == 5) {
+      route = '/about';
+    }
+    if(route != '/login') {
+      this.props.router.push(route);
       this.setState({tabIndex: this._getSelectedIndex()});
     }
   }
@@ -126,7 +135,7 @@ class Navigation extends Component {
         height: 64,
         top: 0,
         right: 0,
-        zIndex: 4,
+        zIndex: 0,
         width: '100%',
       },
       container: {
@@ -155,7 +164,8 @@ class Navigation extends Component {
       },
       tabs: {
         width: 600,
-        bottom:0
+        bottom:0,
+        height: 64
       },
       tab: {
         height: 64,
@@ -163,29 +173,14 @@ class Navigation extends Component {
       },
 
     };
-
-
-     const actions = [
-      <FlatButton
-        label="Cancel"
-        secondary={true}
-        onClick={this.handleClose} />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onClick={this.handleClose} />,
-    ];
-
     let renderedResult;
     let loggedIn = false
     let materialIcon = this.state.tabIndex !== '0' ? (
-     <RaisedButton
+     <EnhancedButton
         style={styles.svgLogoContainer}
         href="/">
-        <img style={styles.svgLogo} />
         <span style={styles.span}>MobaRedux</span>
-      </RaisedButton>) : null;
+      </EnhancedButton>) : null;
 
     if (loggedIn) {
     renderedResult = (
@@ -201,17 +196,16 @@ class Navigation extends Component {
             <Tabs
               style={styles.tabs}
               value={this.state.tabIndex}
-              onChange={this._handleTabChange}>
+              onChange={this._handleTabChange}
+              inkBarStyle={{backgroundColor:"#FFC107"}}>
               <Tab
                 value="8"
                 label="DASHBOARD"
-                style={styles.tab}
-                route="/dashboard" />
+                style={styles.tab}/>
                 <Tab
                 value="5"
                 label="ABOUT"
-                style={styles.tab}
-                route="/about" />
+                style={styles.tab} />
             </Tabs>
 
 
@@ -237,17 +231,18 @@ else {
             <Tabs
               style={styles.tabs}
               value={this.state.tabIndex}
-              onChange={this._handleTabChange}>
+              onChange={this._handleTabChange}
+              inkBarStyle={{backgroundColor:"#FFC107"}}>
               <Tab
                 value="8"
                 label="DASHBOARD"
                 style={styles.tab}
-                route="/dashboard" />
+                 />
                 <Tab
                 value="5"
                 label="ABOUT"
                 style={styles.tab}
-                route="/about" />
+                />
             </Tabs>
 
 
@@ -272,23 +267,31 @@ return (
       this.props.router.isActive('/gallery') ? 'Gallery' : 
       this.props.router.isActive('/profile') ? 'Profile' :
       this.props.router.isActive('/pitch') ? 'Create Pitch' :
-      this.props.router.isActive('/about') ? 'About' : '';
- 
-    let githubButton = (
-      <IconButton
-        iconClassName="muidocs-icon-custom-github"
-        href="https://github.com/callemall/material-ui"
-        linkButton={true}/>
-    );
+      this.props.router.isActive('/about') ? 'About' : 'MobaRedux';
+
+
+      console.log(title);
+
+      let style = {
+        title : {
+          float: 'left',
+          color: 'white'
+        },
+
+        icon : {
+          float: 'left'
+        }
+      };
 
     return (
       <div>
         <AppBar
           onLeftIconButtonTouchTap={this.toggle}
           title={title}
+          titleStyle={style.title}
+          iconStyleLeft={style.icon}
           zDepth={0}
-          iconElementRight={githubButton}
-          style={{position: 'fixed', top: 0, backgroundColor: '#333'}}/>
+          style={{position: 'fixed', height: '64px', top: 0, backgroundColor: '#333', top: 0, right: 0  }}/>
       </div>);
   }
 
@@ -340,50 +343,30 @@ return (
 
       if (loggedIn) {
       renderedresult = (
-<Drawer width={200} docked = {false} open={this.state.leftNavOpen} onRequestChange={this.handleChangeRequestLeftNav}>
+<Drawer width={300} docked = {false} open={this.state.leftNavOpen} onRequestChange={this.handleChangeRequestLeftNav}>
         <div style = {header.root}>
-        200000Pitches
+        MobaRedux
         </div>
           <SelectableList
             value = {this._getSelectedItem}
             onChange = {this.handleRequestChangeList}
           >
-          
           <ListItem
-            value="/"
+            value="/dashboard"
             primaryText="Dashboard"/>
-
-          <ListItem
-            value="/gallery"
-            primaryText="Gallery"/>
-
-          <ListItem
-            value="/profile"
-            primaryText="Profile"/>
-
-          <ListItem
-            value="/pitch"
-            primaryText="Pitch"/>
-
-          <ListItem
-            value="null"
-            onClick = {this._onLogout}
-            primaryText="Logout"/>
-
           <ListItem
             value="/about"
             primaryText="About"/>
           </SelectableList>
         </Drawer>
-
         );
     }
 
     else {
       renderedresult = (
-        <Drawer width={200} docked = {false} open={this.state.leftNavOpen} onRequestChange={this.handleChangeRequestLeftNav}>
+        <Drawer width={300} docked = {false} open={this.state.leftNavOpen} onRequestChange={this.handleChangeRequestLeftNav}>
         <div style = {header.root}>
-        20000Pitches
+        MobaRedux
         </div>
           <SelectableList
             value = {this._getSelectedItem}
@@ -391,17 +374,8 @@ return (
           >
           
           <ListItem
-            value="/"
+            value="/dashboard"
             primaryText="Dashboard"/>
-
-          <ListItem
-            value="/gallery"
-            primaryText="Gallery"/>
-
-          <ListItem
-            value="/login"
-            primaryText="Login/Register"/>
-
           <ListItem
             value="/about"
             primaryText="About"/>
@@ -414,14 +388,6 @@ return (
       <div>
         {renderTabs}
         {renderedresult}
-        <Dialog   
-          bodyStyle={dialogStyle.mainDialog}
-          contentStyle={dialogStyle.root}
-          modal={false}
-          onRequestClose={this.handleDialogClose}
-          open={this.state.open}>
-          
-        </Dialog>
         </div>
 
     );
@@ -443,7 +409,7 @@ return (
       });
     }
     else {
-        this.props.router.pushState(null, value);
+        this.props.router.push(value);
         this.setState({
           leftNavOpen: false,
         });

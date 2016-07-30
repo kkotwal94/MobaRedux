@@ -29,7 +29,7 @@ class App extends React.Component {
 	  	<MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme, { userAgent: 'all' })}>
 	    <div className={cx('app')}>
 	      <Navigation />
-	      <Message />
+	      
 	        {this.props.children}
 	    </div>
 	    </MuiThemeProvider>

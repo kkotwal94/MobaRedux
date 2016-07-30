@@ -1,6 +1,7 @@
 .header {
   composes: heading from '../common/typography';
   text-align: center;
+  margin-top: 80px;
 }
 
 .description {
